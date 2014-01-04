@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+        <class name="com.tinyagenda.model.Person" table="person"> 
+            <id name="id" column="id_person">
+                <generator class="identity" />
+            </id>
+            <property name="name" type="string" column="name" />
+            <property name="pwd" type="string" column="pwd" />
+            <list name="events" cascade="all-delete-orphan">
+                <key column="id_person" /> 
+                <index column="myday" />
+                <one-to-many class="com.tinyagenda.model.Event" />
+            </list>  
+        </class>   
+        
+        <class name="com.tinyagenda.model.Event" table="event"> 
+            <id name="id" column="id_event">
+                <generator class="identity" />
+            </id>
+            <property name="myday" type="date" column="myday" />
+            <property name="anhour" type="time" column="anhour" />
+            <property name="name" type="string" column="name" />
+            <property name="description" type="string" column="description" />
+            <many-to-one name="user" column="id_person"  />
+        </class>     
+</hibernate-mapping>
